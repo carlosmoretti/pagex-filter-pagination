@@ -14,10 +14,7 @@ namespace pagex
         /// Get the response of filtering/pagination.
         /// </summary>
         public IEnumerable<T> response { get; set; }
-        /// <summary>
-        /// Filter used to create the response.
-        /// </summary>
-        public F filter { get; set; }
+        
         /// <summary>
         /// Actual page.
         /// </summary>
