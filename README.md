@@ -402,3 +402,72 @@ Onde:
   ]
 }
 ```
+
+### Implementação com Angular
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+@Component({
+  selector: 'app-grid',
+  templateUrl: './grid.component.html',
+  styleUrls: ['./grid.component.css']
+})
+export class GridComponent implements OnInit {
+
+  public itens$: Observable<any>;
+  
+  public actualPage: number;
+  public itensPerPage: number;
+  public orderColumn: string;
+  public orderDirection: string;
+  
+  public name: string;
+  public id: number;
+
+  constructor(private http: HttpClient) {
+  }
+
+  ngOnInit(): void {
+    this.name = null;
+    this.id = null;
+    this.actualPage = 1;
+    this.itensPerPage = 10;
+    this.orderColumn = "Id";
+    this.orderDirection = "ASC";
+    this.updateTable();
+  }
+
+  updateTable() {
+    console.log(this.id);
+    this.itens$ = this.http.post("http://localhost:64588/api/Teste", {
+      "name": this.name,
+      "id": this.id,
+      "page": this.actualPage,
+      "itensPerPage": this.itensPerPage,
+      "orderColumn": this.orderColumn,
+      "orderDirection": this.orderDirection
+    });
+  }
+
+  updatePage(page: number) {
+    this.actualPage = page;
+    this.updateTable();
+  }
+
+  changeItensPerPage(obj: HTMLSelectElement) {
+    this.actualPage = 1;
+    this.itensPerPage = parseInt(obj.value);
+    this.updateTable();
+  }
+
+  filterTable(id: number, name: string) {
+    this.id = id
+    this.name = name
+    this.actualPage = 1
+    this.updateTable();
+  }
+
+}
+```
