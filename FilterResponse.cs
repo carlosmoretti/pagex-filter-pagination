@@ -59,7 +59,7 @@ namespace pagex
                     {
                         Active = false,
                         Label = "<<",
-                        PageNumber = pages.StartPage
+                        PageNumber = 1
                     });
                     pm.Add(new PageModel
                     {
